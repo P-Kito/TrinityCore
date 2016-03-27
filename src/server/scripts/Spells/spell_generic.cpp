@@ -4168,16 +4168,11 @@ public:
         {
             if (Unit* target = GetHitUnit())
             {
-                Unit::AuraApplicationMap & auraMap = target->GetAppliedAuras();
-                for (Unit::AuraApplicationMap::iterator iter = auraMap.begin(); iter != auraMap.end();)
+                target->RemoveOwnedAuras([](Aura const* aura)
                 {
-                    AuraApplication * aurApp = iter->second;
-                    Aura* aura = aurApp->GetBase();
-                    if (!aura->IsPassive() && !aurApp->IsPositive())
-                        target->RemoveAura(iter);
-                    else
-                        ++iter;
-                }
+                    SpellInfo const* spellInfo = aura->GetSpellInfo();
+                    return !spellInfo->IsPositive() && !spellInfo->IsPassive();
+                });
             }
         }
 
