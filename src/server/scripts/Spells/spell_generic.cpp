@@ -4166,7 +4166,7 @@ public:
 
         void HandleScript(SpellEffIndex /*effIndex*/)
         {
-            if (Unit* caster = GetCaster())
+            if (Unit* caster = GetHitUnit())
             {
                 Unit::AuraApplicationMap const& auras = caster->GetAppliedAuras();
                 for (Unit::AuraApplicationMap::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
