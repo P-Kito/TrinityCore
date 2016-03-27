@@ -393,6 +393,7 @@ public:
                             me->RemoveAura(SPELL_THADDIUS_INACTIVE_VISUAL);
                             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_STUNNED);
                             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IMMUNE_TO_PC);
+                            me->SetReactState(REACT_AGGRESSIVE);
 
                             DoZoneInCombat();
                             if (Unit* closest = SelectTarget(SELECT_TARGET_NEAREST, 0, 500.0f))
