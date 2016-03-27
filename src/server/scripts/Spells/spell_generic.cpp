@@ -4166,12 +4166,14 @@ public:
 
         void HandleScript(SpellEffIndex /*effIndex*/)
         {
-            if (Unit* caster = GetHitUnit())
+            if (Unit* target = GetHitUnit())
             {
-                Unit::AuraApplicationMap const& auras = caster->GetAppliedAuras();
+                Unit::AuraApplicationMap const& auras = target->GetAppliedAuras();
                 for (Unit::AuraApplicationMap::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
-                    if (!itr->second->IsPositive())
-                        caster->RemoveAura(itr->second->GetBase());
+                    if (Aura* aura = itr->second->GetBase())
+                        if (SpellInfo const* auraInfo = aura->GetSpellInfo())
+                            if (!auraInfo->IsPositive() && !auraInfo->IsPassive())
+                                target->RemoveAura(aura);
             }
         }
 
